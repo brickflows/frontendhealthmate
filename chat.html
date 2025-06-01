@@ -127,4 +127,457 @@
         }
 
         .follow-up-btn:hover {
-            background: linear-gradient(135deg, #f59
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .emergency-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .emergency-call-btn, .first-aid-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            text-decoration: none;
+        }
+
+        .emergency-call-btn:hover {
+            background: #b91c1c;
+            transform: translateY(-2px);
+        }
+
+        .first-aid-btn {
+            background: var(--primary-blue);
+        }
+
+        .first-aid-btn:hover {
+            background: #21965c;
+            transform: translateY(-2px);
+        }
+
+        .possible-conditions, .safety-measures, .follow-up-questions {
+            background: rgba(45, 179, 111, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .symptoms-info {
+            margin-top: 15px;
+            padding: 8px 12px;
+            background: rgba(107, 114, 128, 0.1);
+            border-radius: 20px;
+            text-align: center;
+            font-style: italic;
+            font-size: 12px;
+            color: var(--grey-text);
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="app-container">
+        <div class="sidebar-overlay"></div>
+
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">HealthMate AI</div>
+                <button class="close-sidebar-button"><i class="fas fa-times"></i></button>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="nav-item active" data-target-screen="chat-screen"><i class="fas fa-comment"></i> <span>Medical Chat</span></a></li>
+                    <li><a href="#" class="nav-item" data-target-screen="symptoms-history-screen"><i class="fas fa-history"></i> <span>Symptoms History</span></a></li>
+                    <li><a href="#" class="nav-item" data-target-screen="health-facts-screen"><i class="fas fa-newspaper"></i> <span>Health Facts</span></a></li>
+                    <li><a href="#" class="nav-item" data-target-screen="emergency-contacts-screen"><i class="fas fa-phone-alt"></i> <span>Emergency Contacts</span></a></li>
+                    <li><a href="#" class="nav-item" data-target-screen="settings-screen"><i class="fas fa-cog"></i> <span>Settings</span></a></li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <img src="https://via.placeholder.com/30/87CEEB/FFFFFF?text=U" alt="User Avatar" class="avatar">
+                    <span>Patient</span>
+                </div>
+                <button class="logout-button" title="Logout"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </aside>
+
+        <!-- Welcome Screen -->
+        <div class="welcome-screen active-screen">
+            <header class="app-header">
+                <div class="logo">🏥 HealthMate AI</div>
+                <div class="disclaimer">Medical Triage Assistant</div>
+            </header>
+            <main class="welcome-content">
+                <div class="welcome-icon">🩺</div>
+                <h1>HealthMate AI Medical Triage</h1>
+                <p>Advanced AI-powered medical triage assistant that helps assess your symptoms, provides health guidance, and determines the appropriate level of care needed. Our system uses advanced medical knowledge to help you make informed decisions about your health.</p>
+                <button id="start-chat-button" class="cta-button">Start Medical Assessment</button>
+                <div style="margin-top: 20px; font-size: 0.9em; color: var(--grey-text);">
+                    <strong>⚠️ Important:</strong> This is not a substitute for professional medical advice. In emergencies, call 112 immediately.
+                </div>
+            </main>
+        </div>
+
+        <!-- Chat Screen -->
+        <div class="chat-screen">
+            <header class="chat-header">
+                <button class="sidebar-toggle-button"><i class="fas fa-bars"></i></button>
+                <div class="user-profile">
+                    <div class="avatar" style="background: linear-gradient(135deg, #2db36f, #50e3c2); display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">🩺</div>
+                    <span class="user-name">HealthMate AI Triage</span>
+                </div>
+                <div class="header-actions">
+                    <button title="More options"><i class="fas fa-ellipsis-v"></i></button>
+                </div>
+            </header>
+
+            <div class="chat-content">
+                <div class="chat-messages">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+
+                <!-- Prompt Suggestion Area -->
+                <div class="prompt-suggestion-area" style="display: none;">
+                    <div class="welcome-prompt-text">
+                        <h2>How are you feeling today?</h2>
+                        <p>Choose a prompt below or describe your symptoms in detail.</p>
+                    </div>
+                    <div class="prompt-buttons">
+                        <button class="prompt-button" data-prompt="I have a severe headache and fever for the past 3 days. The headache is throbbing and gets worse with light.">
+                            <i class="fas fa-head-side-mask"></i> Severe headache with fever (3 days)
+                        </button>
+                        <button class="prompt-button" data-prompt="I'm experiencing chest pain and shortness of breath. It started about an hour ago and feels like pressure.">
+                            <i class="fas fa-heartbeat"></i> Chest pain with breathing difficulty
+                        </button>
+                        <button class="prompt-button" data-prompt="I have stomach pain, nausea, and vomiting since this morning. The pain is sharp and in my lower right abdomen.">
+                            <i class="fas fa-procedures"></i> Abdominal pain with nausea
+                        </button>
+                        <button class="prompt-button" data-prompt="I've been feeling very tired and weak for the past week, with loss of appetite and occasional dizziness.">
+                            <i class="fas fa-tired"></i> Persistent fatigue and weakness
+                        </button>
+                        <button class="prompt-button" data-prompt="I have a persistent cough with blood in my sputum for the past 2 days, along with difficulty breathing.">
+                            <i class="fas fa-lungs"></i> Cough with blood and breathing issues
+                        </button>
+                        <button class="prompt-button" data-prompt="I think I might have sprained my ankle. It's swollen, painful, and I can't put weight on it.">
+                            <i class="fas fa-band-aid"></i> Possible ankle sprain injury
+                        </button>
+                    </div>
+                    <button class="refresh-prompts-button">
+                        <i class="fas fa-sync-alt"></i> Refresh Prompts
+                    </button>
+                </div>
+
+                <!-- Chat Disclaimer Bar -->
+                <div class="chat-disclaimer-bar">
+                    ⚠️ AI medical triage assistant. Always consult healthcare professionals for medical decisions. Call 112 for emergencies.
+                </div>
+
+                <!-- Loading Diagnosis -->
+                <div class="loading-diagnosis" style="display: none;">
+                    <div class="loader-animation"></div>
+                    <p>Analyzing your symptoms with advanced medical AI...</p>
+                    <small>This may take a few moments for thorough assessment</small>
+                </div>
+
+                <!-- Enhanced Diagnosis Panel -->
+                <div class="diagnosis-panel" style="display: none;">
+                    <div class="panel-header">
+                        <h3 id="diagnosis-panel-title">Medical Assessment Results</h3>
+                        <button class="close-panel-button" id="close-diagnosis-panel">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="card-layout">
+                        <div class="condition-prediction">
+                            <span class="label">Assessment:</span> 
+                            <span class="value" id="diagnosis-condition">Analyzing...</span>
+                        </div>
+                        <div class="triage-level" id="diagnosis-triage">
+                            <span class="level-indicator">⏳</span> Processing assessment...
+                        </div>
+                        
+                        <!-- Urgent Diagnosis Content -->
+                        <div class="urgent-diagnosis-content" id="urgent-diagnosis-content" style="display: none;">
+                            <div class="alert-icon-text">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span class="alert-text">URGENT MEDICAL ATTENTION REQUIRED</span>
+                            </div>
+                            <p>Your symptoms suggest a condition that needs immediate medical care!</p>
+                            <div class="emergency-actions">
+                                <button class="cta-button red" id="call-emergency-button">
+                                    <i class="fas fa-phone-alt"></i> CALL 112 NOW
+                                </button>
+                                <button class="cta-button primary-outline" id="perform-first-aid-button">
+                                    <i class="fas fa-medkit"></i> FIRST AID GUIDE
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Regular Assessment Content -->
+                        <div class="analysis-summary" id="analysis-summary-section">
+                            <h4>🔍 Analysis Summary:</h4>
+                            <ul id="analysis-summary-list">
+                                <li>Waiting for assessment...</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="confidence-score" id="confidence-score-section">
+                            <strong>🎯 Assessment Confidence:</strong> <span id="confidence-value">Processing...</span>
+                        </div>
+                        
+                        <div class="next-steps" id="next-steps-section">
+                            <h4>📋 Recommended Next Steps:</h4>
+                            <ul id="next-steps-list">
+                                <li>Assessment in progress...</li>
+                            </ul>
+                            <button class="action-button">Find Nearby Healthcare Providers</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="chat-input-area">
+                <button id="reopen-panel-button" class="reopen-button" style="display: none;">
+                    <i class="fas fa-chart-bar"></i> View Assessment Results
+                </button>
+                <div class="input-wrapper">
+                    <input type="text" id="chat-input" placeholder="Describe your symptoms in detail (when they started, severity, etc.)...">
+                    <button id="send-button"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- First Aid Screen -->
+        <div class="first-aid-screen app-screen">
+            <header class="app-header">
+                <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo">🚑 Emergency First Aid</div>
+            </header>
+            <main class="first-aid-content screen-content">
+                <h2>Emergency First Aid Guide</h2>
+                <div class="aid-steps">
+                    <div class="emergency-section">
+                        <h3>🚨 For Life-Threatening Emergencies:</h3>
+                        <p><strong>Call 112 immediately</strong> for:</p>
+                        <ul>
+                            <li>Unconsciousness or unresponsiveness</li>
+                            <li>Severe chest pain or heart attack symptoms</li>
+                            <li>Difficulty breathing or choking</li>
+                            <li>Severe bleeding that won't stop</li>
+                            <li>Signs of stroke (FAST: Face drooping, Arm weakness, Speech difficulty, Time to call)</li>
+                            <li>Suspected spinal injury</li>
+                            <li>Severe allergic reactions</li>
+                        </ul>
+                    </div>
+
+                    <div class="basic-first-aid">
+                        <h3>🩹 Basic First Aid Steps:</h3>
+                        
+                        <h4>For Bleeding:</h4>
+                        <ol>
+                            <li>Apply direct pressure with clean cloth</li>
+                            <li>Elevate the injured area if possible</li>
+                            <li>Don't remove embedded objects</li>
+                            <li>Seek medical attention for deep cuts</li>
+                        </ol>
+
+                        <h4>For Burns:</h4>
+                        <ol>
+                            <li>Cool the burn with cold water for 10-20 minutes</li>
+                            <li>Remove jewelry before swelling</li>
+                            <li>Don't use ice or butter</li>
+                            <li>Cover with clean, dry cloth</li>
+                        </ol>
+
+                        <h4>For Fractures/Sprains:</h4>
+                        <ol>
+                            <li>Don't move the injured person unless necessary</li>
+                            <li>Apply ice wrapped in cloth</li>
+                            <li>Immobilize the injured area</li>
+                            <li>Seek medical attention</li>
+                        </ol>
+                    </div>
+
+                    <div class="emergency-contacts">
+                        <h3>📞 Emergency Numbers:</h3>
+                        <ul>
+                            <li><strong>Nigeria Emergency:</strong> 112</li>
+                            <li><strong>Lagos State Emergency:</strong> 199</li>
+                            <li><strong>National Emergency Management Agency:</strong> 0800-033-3362</li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Symptoms History Screen -->
+        <div class="symptoms-history-screen app-screen">
+            <header class="app-header">
+                <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo">📋 Symptoms History</div>
+            </header>
+            <main class="screen-content">
+                <h2>Your Medical Assessment History</h2>
+                <p>Track your previous symptom assessments and medical recommendations.</p>
+                <div class="history-list">
+                    <div class="history-item">
+                        <h4>🤕 Headache & Fever Assessment</h4>
+                        <p>Date: 2025-05-28 | Assessment: Possible viral infection | Triage: Moderate - Clinic recommended</p>
+                        <p>Symptoms: Severe headache, fever 101°F, light sensitivity</p>
+                        <div class="history-actions">
+                            <button class="view-details-btn">View Full Assessment</button>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <h4>🩹 Minor Hand Injury</h4>
+                        <p>Date: 2025-05-25 | Assessment: Minor laceration | Triage: Mild - Self-care possible</p>
+                        <p>Symptoms: Small cut on hand, minimal bleeding</p>
+                        <div class="history-actions">
+                            <button class="view-details-btn">View Full Assessment</button>
+                        </div>
+                    </div>
+                    <div class="history-item">
+                        <h4>🤧 Respiratory Symptoms</h4>
+                        <p>Date: 2025-05-20 | Assessment: Likely allergic rhinitis | Triage: Mild - Monitor symptoms</p>
+                        <p>Symptoms: Runny nose, sneezing, itchy eyes</p>
+                        <div class="history-actions">
+                            <button class="view-details-btn">View Full Assessment</button>
+                        </div>
+                    </div>
+                </div>
+                <button class="cta-button" style="margin-top: 20px;">
+                    <i class="fas fa-download"></i> Export Health Report
+                </button>
+            </main>
+        </div>
+
+        <!-- Health Facts Screen -->
+        <div class="health-facts-screen app-screen">
+            <header class="app-header">
+                <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo">📚 Health Facts</div>
+            </header>
+            <main class="screen-content">
+                <h2>Evidence-Based Health Information</h2>
+                <p>Learn about important health topics with medically accurate information.</p>
+                <div class="article-list">
+                    <div class="article-card">
+                        <h3>🫀 Understanding Heart Health</h3>
+                        <p>Learn about cardiovascular health, risk factors, and prevention strategies for heart disease.</p>
+                        <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="article-card">
+                        <h3>💧 Hydration and Your Health</h3>
+                        <p>Discover why proper hydration is crucial for optimal body function and overall wellness.</p>
+                        <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="article-card">
+                        <h3>😴 The Science of Sleep</h3>
+                        <p>Understanding sleep cycles, quality rest, and how sleep affects your physical and mental health.</p>
+                        <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="article-card">
+                        <h3>🦠 Infection Prevention</h3>
+                        <p>Essential practices for preventing common infections and maintaining good hygiene.</p>
+                        <a href="#" class="read-more-link">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Emergency Contacts Screen -->
+        <div class="emergency-contacts-screen app-screen">
+            <header class="app-header">
+                <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo">📞 Emergency Contacts</div>
+            </header>
+            <main class="screen-content">
+                <h2>Emergency Medical Contacts</h2>
+                <p>Quick access to important emergency and medical contact numbers.</p>
+                <div class="contact-list">
+                    <div class="contact-item urgent">
+                        <h4>🚨 Emergency Services</h4>
+                        <p>For life-threatening emergencies</p>
+                        <a href="tel:112" class="emergency-call"><i class="fas fa-phone"></i> 112 (National Emergency)</a>
+                    </div>
+                    <div class="contact-item">
+                        <h4>🏥 Primary Doctor</h4>
+                        <p>Dr. Emily Johnson - Family Medicine</p>
+                        <a href="tel:+2341234567890"><i class="fas fa-phone"></i> +234 123 456 7890</a>
+                    </div>
+                    <div class="contact-item">
+                        <h4>👨‍⚕️ Specialist</h4>
+                        <p>Dr. Michael Chen - Cardiology</p>
+                        <a href="tel:+2341987654321"><i class="fas fa-phone"></i> +234 198 765 4321</a>
+                    </div>
+                    <div class="contact-item">
+                        <h4>👪 Emergency Contact</h4>
+                        <p>Jane Doe (Spouse)</p>
+                        <a href="tel:+2341122334455"><i class="fas fa-phone"></i> +234 112 233 4455</a>
+                    </div>
+                    <div class="contact-item">
+                        <h4>🏥 Nearest Hospital</h4>
+                        <p>Lagos University Teaching Hospital</p>
+                        <a href="tel:+2341555666777"><i class="fas fa-phone"></i> +234 155 566 6777</a>
+                    </div>
+                </div>
+                <button class="cta-button primary-outline add-contact-button">
+                    <i class="fas fa-plus"></i> Add New Contact
+                </button>
+            </main>
+        </div>
+
+        <!-- Settings Screen -->
+        <div class="settings-screen app-screen">
+            <header class="app-header">
+                <button class="back-button"><i class="fas fa-arrow-left"></i></button>
+                <div class="logo">⚙️ Settings</div>
+            </header>
+            <main class="screen-content">
+                <h2>App Settings & Preferences</h2>
+                <p>Customize your HealthMate AI experience and privacy settings.</p>
+                <ul class="settings-list">
+                    <li><i class="fas fa-bell"></i> <span>Notification Preferences</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-user-shield"></i> <span>Privacy & Data Settings</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-language"></i> <span>Language Settings</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-moon"></i> <span>Dark Mode</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-download"></i> <span>Export Health Data</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-info-circle"></i> <span>About HealthMate AI</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-file-contract"></i> <span>Terms of Service</span> <i class="fas fa-chevron-right"></i></li>
+                    <li><i class="fas fa-shield-alt"></i> <span>Privacy Policy</span> <i class="fas fa-chevron-right"></i></li>
+                </ul>
+                
+                <div style="margin-top: 30px; padding: 20px; background: #f0f9ff; border-radius: 10px; border-left: 4px solid var(--primary-blue);">
+                    <h4>ℹ️ Important Medical Disclaimer</h4>
+                    <p style="font-size: 14px; line-height: 1.6; color: var(--grey-text);">
+                        HealthMate AI is a medical triage assistant designed to provide health information and guidance. 
+                        It is not a substitute for professional medical advice, diagnosis, or treatment. 
+                        Always seek the advice of qualified healthcare providers with any questions about medical conditions. 
+                        In case of emergency, call 112 immediately.
+                    </p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <script src="chatbot.js"></script>
+</body>
+</html>

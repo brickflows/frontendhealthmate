@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const allBackButtons = document.querySelectorAll('.app-screen .back-button');
 
     // Configuration
-    const API_BASE_URL = 'https://backendhealthmate13.vercel.app';
+    const API_BASE_URL = 'https://backendhealthmate2.vercel.app';
     
     // Chat state
     let threadId = null;

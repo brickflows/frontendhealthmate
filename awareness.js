@@ -1,5 +1,5 @@
 // API base URL - change to your local server address for testing
-const API_BASE_URL = 'https://backendhealthmate13.vercel.app';
+const API_BASE_URL = 'https://backendhealthmate2.vercel.app';
 
 // Cache management
 const CACHE_DURATION = 60 * 60 * 1000; // 1 hour in milliseconds
